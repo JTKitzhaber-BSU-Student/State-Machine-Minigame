@@ -10,7 +10,7 @@
  James Kitzhaber
 
 ### Artist(s)
- Lee Rasmussen
+ Lee Rasmussen  
  Taylor Renner
 
 ### Lead Developer/Secondary Tester
