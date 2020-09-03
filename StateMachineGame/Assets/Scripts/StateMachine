@@ -1,0 +1,70 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.AI;
+
+public class StateMachine : MonoBehaviour
+{
+
+    public GameObject bossOne;
+    public GameObject bossTwo;
+    public GameObject bossThree;
+    public GameObject player;
+
+    public Vector3 playerPos;
+    public Vector3 enemyPos;
+    private Quaternion lookRotation;
+
+    public enum theStates
+    {
+        
+        defense,
+        normal
+    }
+
+    public void OnStateEnter()
+    {
+
+    }
+
+    //this game's start function
+    public virtual IEnumerator StartGame()
+    {
+        yield break;
+    }
+
+
+    //for the defensive or scared state of our creatures
+    public virtual IEnumerator Defense()
+    {
+        yield break;
+    }
+
+    //for the normal state of our creatures
+    public virtual IEnumerator Normal()
+    {
+        yield break;
+    }
+    // Update is called once per frame
+    public virtual void Update()
+    {
+
+    }
+
+
+    public void FollowTarget()
+    {
+        //find player position
+        //follow the player
+        GameObject.FindGameObjectsWithTag("Player");
+        playerPos = player.transform.position;
+        lookRotation = Quaternion.LookRotation(playerPos, enemyPos);
+        Quaternion.Slerp(bossOne.transform.rotation, player.transform.rotation, Time.deltaTime);
+
+        //if player gets within range of boss enemy
+        //then follow the player
+    }
+}
+
+
