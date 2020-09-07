@@ -5,27 +5,59 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.AI;
 
-public class StateMachine : MonoBehaviour
+
+public enum theStates
 {
 
+    dead,
+    normal,
+    attack
+}
+
+public class StateMachine : MonoBehaviour
+{
     public GameObject bossOne;
     public GameObject bossTwo;
     public GameObject bossThree;
     public GameObject player;
 
+    //CHECK ENEMY AI FORUM FOR CODE BY Eiznek
+    //STATES
+    public theStates currentState = theStates.normal;
+    private theStates nextState = theStates.normal;
+    private Transform playerTarget;
+
+  //  public theStates defense = theStates.defense;
+  //  public theStates attack = theStates.attack;
+    //private theStates 
+
+    //CHECK ENEMY AI FORUM FOR CODE BY Eiznek
+    public float viewDistance = 5f;
+    //THE RADIUS WHERE THE ENEMY WILL SEE YOU
+    public float radius = 1f;
+
     public Vector3 playerPos;
     public Vector3 enemyPos;
     private Quaternion lookRotation;
 
-    public enum theStates
+    private void Start()
     {
+        enemyPos = transform.position;
         
-        defense,
-        normal
     }
 
-    public void OnStateEnter()
+    //GetRandomDir method from Simple Public Enemy AI video
+    //Generates random normalized direction
+    private static Vector3 GetRandomDir()
     {
+        return new Vector3(UnityEngine.Random.Range(-1f, 1f), UnityEngine.Random.Range(-1f, 1f)).normalized;
+    }
+
+    //GetRoamingPos method from Simple Public Enemy AI video
+
+    private Vector3 GetRoamingPos()
+    {
+        return enemyPos + GetRandomDir() * Random.Range(10f, 50f);
 
     }
 
@@ -66,6 +98,6 @@ public class StateMachine : MonoBehaviour
         //if player gets within range of boss enemy
         //then follow the player
     }
+
+
 }
-
-
