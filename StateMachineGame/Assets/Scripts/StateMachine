@@ -21,14 +21,16 @@ public class StateMachine : MonoBehaviour
     public GameObject bossThree;
     public GameObject player;
 
+    //TEMPORARY NUMBER. FEEL FREE TO CHANGE LATER
+    public int health = 10;
     //CHECK ENEMY AI FORUM FOR CODE BY Eiznek
     //STATES
     public theStates currentState = theStates.normal;
-    private theStates nextState = theStates.normal;
+    public theStates nextState = theStates.normal;
     private Transform playerTarget;
 
-  //  public theStates defense = theStates.defense;
-  //  public theStates attack = theStates.attack;
+    //  public theStates defense = theStates.defense;
+    //  public theStates attack = theStates.attack;
     //private theStates 
 
     //CHECK ENEMY AI FORUM FOR CODE BY Eiznek
@@ -40,10 +42,15 @@ public class StateMachine : MonoBehaviour
     public Vector3 enemyPos;
     private Quaternion lookRotation;
 
+    //CHECK ENEMY AI FORUM FOR CODE BY Eiznek
+    //BOOLS
+    private bool isStateFinished = true;
+    private bool interruptState = false;
+
     private void Start()
     {
         enemyPos = transform.position;
-        
+
     }
 
     //GetRandomDir method from Simple Public Enemy AI video
@@ -61,28 +68,57 @@ public class StateMachine : MonoBehaviour
 
     }
 
-    //this game's start function
-    public virtual IEnumerator StartGame()
+  
+    public void StartGame()
     {
-        yield break;
+        
+    }
+    
+    
+    public void Dead()
+    {
+        if(health == 0)
+        {
+            Destroy(gameObject);
+        }
+
+      
     }
 
-
     //for the defensive or scared state of our creatures
-    public virtual IEnumerator Defense()
+    public void Attack()
     {
-        yield break;
+        
     }
 
     //for the normal state of our creatures
-    public virtual IEnumerator Normal()
+    public void Normal()
     {
-        yield break;
+        
     }
-    // Update is called once per frame
-    public virtual void Update()
+    
+    public void Update()
     {
-
+        //CHECK ENEMY AI FORUM BY Eiznek
+        if(currentState != nextState && (isStateFinished || interruptState))
+        {
+            currentState = nextState;
+            isStateFinished = false;
+            switch (currentState)
+            {
+                case theStates.normal:
+                    Normal();
+                    break;
+                case theStates.attack:
+                    Attack();
+                    break;
+                case theStates.dead:
+                    Dead();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
 
@@ -99,5 +135,11 @@ public class StateMachine : MonoBehaviour
         //then follow the player
     }
 
+    private bool InterruptState
+    {
+        get{ return interruptState; }
+        set{ interruptState = value; }
 
+    }
 }
+
