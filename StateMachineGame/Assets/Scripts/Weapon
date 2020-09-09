@@ -1,3 +1,4 @@
+//MIKENNA'S CODE
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,12 @@ public class Weapon : MonoBehaviour
 
     //PRIVATE VARIABLES
     private int _damage;
+
+    //TRANSFORMS
+    public Vector3 playerPos;
+    public Vector3 enemyPos;
+    public Vector3 arrowPos;
+    private Quaternion arrowRotation;
 
     // Start is called before the first frame update
     void Start()
@@ -40,25 +47,28 @@ public class Weapon : MonoBehaviour
         }
     }
 
-   /*private void OnCollisionEnter(Collision collision)
-   {
-       //if the arrow hits the enemy then take away 5 health points
-        if (collision.tag == "arrow")
-        {
-
-        }
-         enemyHealth -= 5;
-        Destroy(arrow);
-   }*/
-
     private void DoDamage()
     {
         //if arrow is shot
         //then follow the enemy
 
-        if ()
-        {
+        ShootArrow();
 
-        }
+       
     }
-  }
+
+    private void ArrowFollowEnemy()
+    {
+        GameObject.FindGameObjectsWithTag("boss");
+        enemyPos = enemy.transform.position;
+        arrowRotation = Quaternion.LookRotation(arrowPos, enemyPos);
+        //Quaternion.Slerp(enemy.transform.position, player.transform.position, Time.deltaTime);
+
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        DoDamage();
+        enemyHealth -= 5;
+        Destroy(arrow);
+    }
+}
