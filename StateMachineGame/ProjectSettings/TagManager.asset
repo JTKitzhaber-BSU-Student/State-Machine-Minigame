@@ -5,8 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Checkpoint
-  - Walls
   - Enemy
+  - EnemyProjectile
   layers:
   - Default
   - TransparentFX
@@ -16,8 +16,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - EnemyProjectile
+  - Player
   - 
   - 
   - 
