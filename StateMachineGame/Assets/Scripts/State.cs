@@ -186,7 +186,6 @@ public class Patrol : State
             currentIndex = 0;
         }
         float distance = Vector3.Distance(curPos, tags[currentIndex].transform.position);
-        Debug.Log(distance);
         if(distance < 0.25f)
         {
             // If agent has reached end of waypoint list, go back to the first one, otherwise move to the next one.

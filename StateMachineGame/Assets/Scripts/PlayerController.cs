@@ -29,8 +29,6 @@ public class PlayerController : MonoBehaviour
                 Vector2 mousePos = Input.mousePosition;
                 mousePos = camera.ScreenToWorldPoint(mousePos);
                 float angle = Mathf.Atan2(mousePos.y - transform.position.y, mousePos.x - transform.position.x);
-                print(angle);
-                print(mousePos);
                 clone.GetComponent<Rigidbody2D>().AddForce(new Vector2 (Mathf.Cos(angle) * 1000f, Mathf.Sin(angle) * 1000f));
 
         }
