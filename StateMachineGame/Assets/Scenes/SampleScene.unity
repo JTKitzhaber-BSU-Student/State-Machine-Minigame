@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 13708707}
   - component: {fileID: 13708709}
   m_Layer: 0
-  m_Name: Test
+  m_Name: EnemyTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -311,7 +311,7 @@ GameObject:
   m_Component:
   - component: {fileID: 235178570}
   m_Layer: 0
-  m_Name: GameObject (2)
+  m_Name: Checkpoint_2
   m_TagString: Checkpoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -342,7 +342,7 @@ GameObject:
   m_Component:
   - component: {fileID: 283099606}
   m_Layer: 0
-  m_Name: GameObject (3)
+  m_Name: Checkpoint_3
   m_TagString: Checkpoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -468,7 +468,7 @@ GameObject:
   m_Component:
   - component: {fileID: 357424225}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Checkpoint_0
   m_TagString: Checkpoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -582,7 +582,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1294949591}
   m_Layer: 0
-  m_Name: GameObject (1)
+  m_Name: Checkpoint_1
   m_TagString: Checkpoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -902,8 +902,8 @@ GameObject:
   - component: {fileID: 2001109611}
   - component: {fileID: 2001109607}
   m_Layer: 0
-  m_Name: Cube
-  m_TagString: Untagged
+  m_Name: Player
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
