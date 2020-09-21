@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI; // Added since we're using a navmesh.
 
-public class State
+public class State : MonoBehaviour 
 {
     // 'States' that the NPC could be in.
     public enum STATE
@@ -242,7 +242,7 @@ public class Pursue : State
     {
         float curTime = Time.time;
         float step = 2 * Time.deltaTime;
-        npc.transform.position = Vector3.MoveTowards(npc.transform.position, player.position, step);
+        npc.transform.position = Vector2.MoveTowards(npc.transform.position, player.position, step);
         float timeElasped = Time.time - startTime;
         if(timeElasped > 5)
         {

@@ -217,6 +217,9 @@ GameObject:
   - component: {fileID: 535542335}
   - component: {fileID: 535542337}
   - component: {fileID: 535542338}
+  - component: {fileID: 535542339}
+  - component: {fileID: 535542340}
+  - component: {fileID: 535542341}
   m_Layer: 10
   m_Name: Griffin
   m_TagString: Enemy
@@ -302,8 +305,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 535542338}
-  player: {fileID: 535542336}
-  grifAttack: {fileID: 0}
+  player: {fileID: 1896040486}
+  griffin: {fileID: 535542334}
+  viewDist: 3
+  attackDist: 1
+  playerDist: 0
 --- !u!95 &535542338
 Animator:
   serializedVersion: 3
@@ -323,6 +329,55 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &535542339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 535542334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d0263b369adf474f94e4f5eea3e46dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1896040486}
+--- !u!50 &535542340
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 535542334}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &535542341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 535542334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8345d98f9a312cb47b5dadcf513dbd2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 0
+  target: {fileID: 1896040486}
+  tags: []
 --- !u!1 &1193538173
 GameObject:
   m_ObjectHideFlags: 0

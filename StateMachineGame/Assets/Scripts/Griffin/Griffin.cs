@@ -9,8 +9,10 @@ public class Griffin : MonoBehaviour
     public Transform player;
     public GriffinState currentState;
     public GriffinAttack grifAttack;
+    public GriffinIdle grifIdle;
     public GameObject griffin;
-
+    public float viewDist = 3f;
+    public float attackDist = 1f;
  
 
     public float playerDist;
@@ -28,11 +30,16 @@ public class Griffin : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentState = currentState.Process();
-        float dist = Vector2.Distance(player.position, this.transform.position);
-        if(dist <= 0.5f)
+       // currentState = currentState.Process();
+        float playerDist = Vector2.Distance(player.position, this.transform.position);
+        if(playerDist <= viewDist)
         {
-            grifAttack.Enter();
+            currentState = grifIdle;
+        }
+
+        if (attackDist <= viewDist)
+        {
+            currentState = grifAttack;
         }
 
         anim.ResetTrigger("GriffinIdleAnim");
