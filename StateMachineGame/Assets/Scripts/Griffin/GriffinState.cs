@@ -23,6 +23,7 @@ public class GriffinState
     public GriffinState nextState;
     public GameObject enemy;
 
+    public float playerDist;
     public float attackDist = 1.0f;
 
     // Start is called before the first frame update
@@ -65,7 +66,7 @@ public class GriffinIdle : GriffinState
     public override void Enter()
     {
         Debug.Log("Entered IDLE State");
-        anim.SetTrigger("GriffinIdleAnim");
+        anim.SetTrigger("isIdle");
         timeDelay = Random.Range(2.0f, 5.0f);
         base.Enter();
     }
@@ -90,11 +91,10 @@ public class GriffinIdle : GriffinState
     }
     public override void Exit()
     {
-        anim.ResetTrigger("GriffinIdleAnim");
+        anim.ResetTrigger("isIdle");
         base.Exit();
     }
 
-    
 }
 
 public class GriffinAttack : GriffinState
@@ -111,22 +111,24 @@ public class GriffinAttack : GriffinState
     {
         Debug.Log("Entered attack state");
         state = GRIFFIN_STATE.ATTACK;
-        anim.SetTrigger("GriffinAttackAnim");
+        anim.SetTrigger("isAttacking");
         base.Enter();
     }
 
     public override void Update()
     {
-
-        
+        playerDist = Vector2.Distance(enemy.transform.position, player.transform.position);
+        if (playerDist <= attackDist) { 
         nextState = new GriffinIdle(enemy, anim, player);
         grifEvent = EVENT.EXIT;
+        }
+       
         base.Update();
     }
 
     public override void Exit()
     {
-        anim.ResetTrigger("GriffinIdleAnim");
+        anim.ResetTrigger("isIdle");
         base.Exit();
     }
 

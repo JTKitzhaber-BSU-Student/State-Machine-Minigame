@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private int second = 1;
     private int shootRate;
 
     // Start is called before the first frame update
@@ -13,6 +12,7 @@ public class Bullet : MonoBehaviour
      
         //Invoke("killBullet", 3.0f);
         StartCoroutine(KillBullet());
+        
     }
 
     // Update is called once per frame
@@ -36,5 +36,24 @@ public class Bullet : MonoBehaviour
         yield return new WaitForSeconds(1f);
         //Debug.Log("Bullet Destroyed");
         Destroy(gameObject);
+    }
+
+    //after two seconds reset the shoot rate
+    IEnumerator ResetShoot()
+    {
+        yield return new WaitForSeconds(2f);
+        shootRate = 0;
+    }
+
+    void CountShots()
+    {
+        if(Input.GetButtonDown("Fire1"))
+        {
+            shootRate++;
+            if(shootRate == 3)
+            {
+                ResetShoot();
+            }
+        }
     }
 }
