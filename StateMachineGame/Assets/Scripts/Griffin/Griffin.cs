@@ -7,9 +7,9 @@ public class Griffin : MonoBehaviour
 {
     public Animator anim;
     public Transform player;
-    public GriffinState currentState;
-    public GriffinAttack grifAttack;
-    public GriffinIdle grifIdle;
+ //   public GriffinState.GRIFFIN_STATE currentState;
+    public Sprite grifAttack;
+    public Sprite grifIdle;
     public GameObject griffin;
     public float viewDist = 3f;
     public float attackDist = 1f;
@@ -23,7 +23,8 @@ public class Griffin : MonoBehaviour
     void Start()
     {
         anim = this.GetComponent<Animator>();
-        currentState = new GriffinIdle(this.gameObject, anim, player);
+       // grifIdle = new GriffinIdle(this.gameObject, anim, player);
+     //   currentState = GriffinState.GRIFFIN_STATE.IDLE;
 
     }
 
@@ -34,12 +35,12 @@ public class Griffin : MonoBehaviour
         float playerDist = Vector2.Distance(player.position, this.transform.position);
         if(playerDist <= viewDist)
         {
-            currentState = grifIdle;
+       //     currentState = GriffinState.GRIFFIN_STATE.IDLE;
         }
 
         if (attackDist <= viewDist)
         {
-            currentState = grifAttack;
+          //  currentState = GriffinState.GRIFFIN_STATE.ATTACK;
         }
 
         anim.ResetTrigger("GriffinIdleAnim");
