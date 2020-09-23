@@ -19,22 +19,27 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Vector2 moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        moveVelocity = moveInput.normalized * speed;
-
-         if (Input.GetButtonDown("Fire1"))
-        {
-                GameObject clone;
-                clone = Instantiate(particle, transform.position, transform.rotation);
-                Vector2 mousePos = Input.mousePosition;
-                mousePos = camera.ScreenToWorldPoint(mousePos);
-                float angle = Mathf.Atan2(mousePos.y - transform.position.y, mousePos.x - transform.position.x);
-                clone.GetComponent<Rigidbody2D>().AddForce(new Vector2 (Mathf.Cos(angle) * 1000f, Mathf.Sin(angle) * 1000f));
-
-        }
+        Fire();
     }
 
     void FixedUpdate(){
         rb.MovePosition(rb.position + moveVelocity * Time.fixedDeltaTime);
+    }
+
+    void Fire()
+    {
+        Vector2 moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        moveVelocity = moveInput.normalized * speed;
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            GameObject clone;
+            clone = Instantiate(particle, transform.position, transform.rotation);
+            Vector2 mousePos = Input.mousePosition;
+            mousePos = camera.ScreenToWorldPoint(mousePos);
+            float angle = Mathf.Atan2(mousePos.y - transform.position.y, mousePos.x - transform.position.x);
+            clone.GetComponent<Rigidbody2D>().AddForce(new Vector2(Mathf.Cos(angle) * 1000f, Mathf.Sin(angle) * 1000f));
+
+        }
     }
 }

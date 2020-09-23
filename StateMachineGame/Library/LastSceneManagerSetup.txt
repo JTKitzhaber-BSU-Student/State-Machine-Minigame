@@ -1,5 +1,9 @@
 sceneSetups:
-- path: Assets/Scenes/HydraBattle.unity
+<<<<<<< HEAD
+- path: Assets/Scenes/WolfBattle.unity
+=======
+- path: Assets/Scenes/GriffinBattle.unity
+>>>>>>> 35cdf0f86bec8d9f9968886a0b3dcd51619bb45a
   isLoaded: 1
   isActive: 1
   isSubScene: 0

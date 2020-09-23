@@ -16,12 +16,12 @@ public class BulletCollider : MonoBehaviour
     void Update()
     {
         lastVelocity = rb.velocity;
+        
     }
 
     private void OnCollisionEnter2D(Collision2D coll){
-        Debug.Log(coll.gameObject.tag);
+        Debug.Log(coll.gameObject.name);
         if(coll.gameObject.tag == "Walls"){
-        Debug.Log("hit wall");
         var speed = lastVelocity.magnitude;
         var direction = Vector3.Reflect(lastVelocity.normalized, coll.contacts[0].normal);
 
