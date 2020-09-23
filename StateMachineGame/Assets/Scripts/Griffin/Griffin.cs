@@ -50,7 +50,7 @@ public class Griffin : MonoBehaviour
     {
         if(gameObject.tag == "Player")
         {
-            Debug.Log("playet hit");
+            Debug.Log("player hit");
         }
 
         if(collision.transform.tag == "Enemy")

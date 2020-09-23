@@ -26,5 +26,13 @@ public class AnimationTest : MonoBehaviour
         {
             grif.Play("GrifSlash");
         }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            grif.Play("GrifPrepWing");
+        }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            grif.Play("GrifWing");
+        }
     }
 }
