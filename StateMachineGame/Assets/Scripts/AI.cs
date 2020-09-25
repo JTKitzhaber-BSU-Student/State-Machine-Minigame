@@ -5,7 +5,7 @@ using UnityEngine.AI;  // Added since we're using a navmesh.
 
 public class AI : MonoBehaviour
 {
-    // Variables to handle what we need to send through to our state.
+    // Variables to handle what we need to send through to our state. 
     SpriteRenderer spriteRenderer;
     public Transform player;  // To store the transform of the player. This will let the guard know where the player is, so it can face the player and know whether it should be shooting or chasing (depending on the distance).
     State currentState;
