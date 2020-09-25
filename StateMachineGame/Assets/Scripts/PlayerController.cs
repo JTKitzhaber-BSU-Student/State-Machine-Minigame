@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
 
     public Animator anim;
 
+    private bool shotCoolDown = true;
+    public float shotDelay = 2.0f;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -61,13 +64,23 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1"))
         {
-            anim.Play("PlayerShoot");
-            GameObject clone;
-            clone = Instantiate(particle, transform.position, transform.rotation);
-            Vector2 mousePos = Input.mousePosition;
-            mousePos = camera.ScreenToWorldPoint(mousePos);
-            float angle = Mathf.Atan2(mousePos.y - transform.position.y, mousePos.x - transform.position.x);
-            clone.GetComponent<Rigidbody2D>().AddForce(new Vector2(Mathf.Cos(angle) * 1000f, Mathf.Sin(angle) * 1000f));
+            if (shotCoolDown)
+            {
+                shotCoolDown = false;
+                Invoke("ResetShot", shotDelay);
+                anim.Play("PlayerShoot");
+                GameObject clone;
+                clone = Instantiate(particle, transform.position, transform.rotation);
+                Vector2 mousePos = Input.mousePosition;
+                mousePos = camera.ScreenToWorldPoint(mousePos);
+                float angle = Mathf.Atan2(mousePos.y - transform.position.y, mousePos.x - transform.position.x);
+                clone.GetComponent<Rigidbody2D>().AddForce(new Vector2(Mathf.Cos(angle) * 1000f, Mathf.Sin(angle) * 1000f));
+            }
         }
+    }
+
+    private void ResetShot()
+    {
+        shotCoolDown = true;
     }
 }
