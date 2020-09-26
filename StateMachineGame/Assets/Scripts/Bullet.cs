@@ -29,6 +29,7 @@ public class Bullet : MonoBehaviour
             KillBullet();
 
             //Call Enemy Damage function
+            collision.gameObject.GetComponent<StateMachine>().DamageEnemy();
         }
     }
 
