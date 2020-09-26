@@ -69,6 +69,8 @@
     <Compile Include="Assets\Scripts\AnimationTest.cs" />
     <Compile Include="Assets\Scripts\HydraStateMachine\Hydra.cs" />
     <Compile Include="Assets\Scripts\State.cs" />
+    <Compile Include="Assets\HealthTest.cs" />
+    <Compile Include="Assets\HealthBar.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
