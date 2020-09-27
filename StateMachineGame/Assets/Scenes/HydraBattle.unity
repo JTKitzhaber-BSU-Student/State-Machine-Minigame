@@ -561,6 +561,10 @@ PrefabInstance:
       propertyPath: camera
       value: 
       objectReference: {fileID: 1985692607}
+    - target: {fileID: 7495986714175658240, guid: 4c5562f22fe2a9f40ac105fa304dc1b8, type: 3}
+      propertyPath: particle
+      value: 
+      objectReference: {fileID: 3347298028601986451, guid: 095e1824a055fef42ad3c4388905b5da, type: 3}
     - target: {fileID: 7495986714175658242, guid: 4c5562f22fe2a9f40ac105fa304dc1b8, type: 3}
       propertyPath: m_Name
       value: NewPlayer

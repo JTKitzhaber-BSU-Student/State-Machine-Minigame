@@ -30,9 +30,17 @@ public class Hydra : MonoBehaviour
         GameObject shot = Instantiate(hydraProjectile, transform.position, transform.rotation);
         shot.GetComponent<Rigidbody2D>().rotation = angle;
         shot.GetComponent<Rigidbody2D>().AddForce(new Vector2(Mathf.Cos(Mathf.Deg2Rad * angle), Mathf.Sin(Mathf.Deg2Rad * angle)) * shotStrength);
+        anim.Play("HydraFireAttack");
     }
     public void SpawnSlam()
     {
+        anim.Play("HydraPrep");
+        StartCoroutine(Slam());
+    }
+
+    IEnumerator Slam()
+    {
+        yield return new WaitForSeconds(.5f);
         GameObject slam = Instantiate(hydraSlam, transform.position, transform.rotation);
     }
 }
