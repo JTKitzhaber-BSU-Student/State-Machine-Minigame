@@ -30,7 +30,6 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate(){
         rb.MovePosition(rb.position + moveVelocity * Time.fixedDeltaTime);
-        
     }
 
     void Look()
