@@ -60,7 +60,7 @@ public class HydraIdle : HydraState
     public override void Enter()
     {
         Debug.Log("Entered IDLE State");
-        anim.SetTrigger("isIdle");
+        //anim.SetTrigger("isIdle");
         timeDelay = Random.Range(2.0f, 5.0f);
         base.Enter();
     }
@@ -91,7 +91,7 @@ public class HydraIdle : HydraState
     }
     public override void Exit()
     {
-        anim.ResetTrigger("isIdle");
+        //anim.ResetTrigger("isIdle");
         base.Exit();
     }
 }
@@ -109,7 +109,7 @@ public class HydraRangedAttack : HydraState
     public override void Enter()
     {
         Debug.Log("Entered Ranged Attack");
-        anim.SetTrigger("isAttack");
+        anim.SetTrigger("isRangeAttack");
         base.Enter();
     }
     public override void Update()
@@ -132,7 +132,7 @@ public class HydraRangedAttack : HydraState
     }
     public override void Exit()
     {
-        anim.ResetTrigger("isAttack");
+        anim.ResetTrigger("isRangeAttack");
         base.Exit();
     }
 }
@@ -146,7 +146,7 @@ public class HydraCloseAttack : HydraState
 
     public override void Enter()
     {
-        anim.SetTrigger("isAttack");
+        anim.SetTrigger("isCloseAttack");
         base.Enter();
     }
     public override void Update()
@@ -161,7 +161,7 @@ public class HydraCloseAttack : HydraState
     }
     public override void Exit()
     {
-        anim.ResetTrigger("isAttack");
+        anim.ResetTrigger("isCloseAttack");
         base.Exit();
     }
 }

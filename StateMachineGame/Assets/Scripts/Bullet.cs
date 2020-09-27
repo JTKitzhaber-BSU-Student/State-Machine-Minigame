@@ -10,8 +10,8 @@ public class Bullet : MonoBehaviour
     void Start()
     {
      
-        //Invoke("killBullet", 3.0f);
-        StartCoroutine(KillBullet());
+        Invoke("KillBullet", 3.0f);
+        //StartCoroutine(KillBullet());
         
     }
 
@@ -29,16 +29,18 @@ public class Bullet : MonoBehaviour
             KillBullet();
 
             //Call Enemy Damage function
+            collision.gameObject.GetComponent<StateMachine>().DamageEnemy();
         }
     }
 
-    IEnumerator KillBullet()
+    private void KillBullet()
     {
-        yield return new WaitForSeconds(1f);
+        //yield return new WaitForSeconds(1f);
         //Debug.Log("Bullet Destroyed");
         Destroy(gameObject);
     }
 
+    /*
     //after two seconds reset the shoot rate
     IEnumerator ResetShoot()
     {
@@ -57,4 +59,5 @@ public class Bullet : MonoBehaviour
             }
         }
     }
+    */
 }

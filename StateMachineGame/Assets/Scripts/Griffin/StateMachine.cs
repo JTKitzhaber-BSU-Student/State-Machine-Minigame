@@ -7,7 +7,6 @@ using UnityEngine.Animations;
 
 public enum theStates
 {
-
  IDLE,
  ATTACK
 }
@@ -20,8 +19,9 @@ public class StateMachine : MonoBehaviour
     public Animator anim;
     public Sprite idleGrif;
     public Sprite attackGrif;
+    public Sprite wingGrif;
     public SpriteRenderer spriteRend;
-
+    
     //TESTING CODE
     //public Color attackCol = Color.red;
    // public Color normalCol = Color.blue;
@@ -93,7 +93,7 @@ public class StateMachine : MonoBehaviour
         if (playerDist <= attackDistance)
         {
             nextState = theStates.ATTACK;
-            Attack();   
+               
         }
         else if(playerDist <= viewDistance)
         {
@@ -137,9 +137,23 @@ public class StateMachine : MonoBehaviour
     {
         if (enemy.tag == "Enemy")
         {
+            float randFloat = Random.value;
+        //do slashing attack or wing attack
+        if (randFloat >= 0.5f)
+        {
             Debug.Log("attacking");
             spriteRend.sprite = attackGrif;
-            anim.SetTrigger("isAttacking");
+            anim.SetTrigger("isSlashing");
+        }
+        else
+        {
+            Debug.Log("winging it");
+            spriteRend.sprite = wingGrif;
+            anim.SetTrigger("wingingIt");
+        }
+
+            randFloat = Random.value;           
+           
             isStateFinished = true;
             Debug.Log(spriteRend.sprite);
         }
@@ -160,173 +174,11 @@ public class StateMachine : MonoBehaviour
       //  Debug.Log(enemyPos.position);
     }
 
-
-    /* private bool InterruptState
-     {
-         get{ return interruptState; }
-         set{ interruptState = value; }
-
-     }*/
-
-    /* bool PlayerInRange()
-     {
-         if(Vector2.Distance(enemyPos.position, playerPos.position) < viewDistance)
-         {
-             return true;
-         }
-         else
-         {
-             return false;
-         }*/
-    //}
+    public void DamageEnemy()
+    {
+        Debug.Log("You hurt me you meanie");
+    }
 }
-
-
-
-
-
-
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
-
-//public class GriffinState : MonoBehaviour
-//{
-
-//    public enum GRIFFIN_STATE
-//    {
-//        IDLE,  ATTACK
-//    }
-
-//    public enum EVENT
-//    {
-//        ENTER, UPDATE, EXIT
-//    }
-
-//    public GRIFFIN_STATE state;
-//    public EVENT grifEvent;
-//    public Animator anim;
-//    public Transform player;
-//    public GriffinState nextState;
-//    public GameObject enemy;
-
-//    public float playerDist;
-//    public float attackDist = 1.0f;
-
-//    // Start is called before the first frame update
-//    public GriffinState(GameObject _enemy, Animator _anim, Transform _player)
-//    {
-
-//        enemy = _enemy;
-//        anim = _anim;
-//        player = _player;
-
-//    }
-
-//    public virtual void Enter() { grifEvent = EVENT.UPDATE; }
-//    public virtual void Update() { }
-//    public virtual void Exit() { grifEvent = EVENT.EXIT; }
-
-//    public GriffinState Process()
-//    {
-//        if (grifEvent == EVENT.ENTER) Enter();
-//        if (grifEvent == EVENT.UPDATE) Update();
-//        if (grifEvent == EVENT.EXIT)
-//        {
-//            Exit();
-//            return nextState;
-//        }
-//        return this;
-//    }
-//}
-
-//public class GriffinIdle : GriffinState
-//{
-
-//    public GriffinIdle(GameObject _enemy, Animator _anim, Transform _player) : base(_enemy, _anim, _player)
-//    {
-//        state = GRIFFIN_STATE.IDLE;
-//        Debug.Log("Idle working");
-//    }
-
-//    double timeDelay = 2.0f;
-
-//    public override void Enter()
-//    {
-//        Debug.Log("Entered IDLE State");
-//        anim.SetTrigger("isIdle");
-//        timeDelay = Random.Range(2.0f, 5.0f);
-//        base.Enter();
-//    }
-//    public override void Update()
-//    {
-//        enemy.transform.position = Vector3.Lerp(enemy.transform.position, player.position, Time.deltaTime);
-//        Debug.Log(enemy.transform.position);
-//        timeDelay -= Time.deltaTime;
-//        if (timeDelay <= 0f)
-//        {
-//            float xDist = player.position.x - enemy.transform.position.x;
-//            float yDist = player.position.y - enemy.transform.position.y;
-//            double distanceFromPlayer = Mathf.Sqrt(Mathf.Pow(xDist, 2.0f) + Mathf.Pow(yDist, 2.0f));
-//            Debug.Log("Checking Player Distance: " + distanceFromPlayer);
-
-//            if (distanceFromPlayer < attackDist)
-//            {
-//                nextState = new GriffinAttack(enemy, anim, player);
-//                grifEvent = EVENT.EXIT;
-//            }
-
-//        }
-//        base.Update();
-//    }
-//    public override void Exit()
-//    {
-//        anim.ResetTrigger("isIdle");
-//        base.Exit();
-//    }
-
-
-//}
-
-
-
-//public class GriffinAttack : GriffinState
-//{
-
-//    public GriffinAttack(GameObject _enemy, Animator _anim, Transform _player): base(_enemy, _anim, _player)
-//    {
-//        {
-//            state = GRIFFIN_STATE.ATTACK;
-
-//        }
-//    }
-//    public override void Enter()
-//    {
-//        Debug.Log("Entered attack state");
-//        state = GRIFFIN_STATE.ATTACK;
-//        anim.SetTrigger("isAttacking");
-//        base.Enter();
-//    }
-
-//    public override void Update()
-//    {
-//        playerDist = Vector2.Distance(enemy.transform.position, player.transform.position);
-//        if (playerDist <= attackDist) { 
-//        nextState = new GriffinIdle(enemy, anim, player);
-//        grifEvent = EVENT.EXIT;
-//        }
-
-//        base.Update();
-//    }
-
-//    public override void Exit()
-//    {
-//        anim.ResetTrigger("isIdle");
-//        base.Exit();
-//    }
-
-
-//}
 
 
 
