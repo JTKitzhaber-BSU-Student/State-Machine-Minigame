@@ -7,6 +7,7 @@ public class Wolf : MonoBehaviour
     SpriteRenderer spriteRenderer;
     public Transform player;
     private Rigidbody2D rb;
+    private Animator anim;
     
     public float shotStrength = 250f;
     WolfState currentState;
@@ -14,8 +15,9 @@ public class Wolf : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        anim = this.GetComponent<Animator>();
         spriteRenderer = this.GetComponent<SpriteRenderer>(); // Grab agents Animator component.
-        currentState = new WolfIdle(this.gameObject, spriteRenderer, player);
+        currentState = new WolfIdle(this.gameObject, spriteRenderer, anim, player);
     }
 
     // Update is called once per frame
@@ -27,7 +29,7 @@ public class Wolf : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D coll){
         if(currentState.name == WolfState.WOLFSTATE.PURSUE){
-            currentState = new WolfCharge(this.gameObject, spriteRenderer, player);
+            currentState = new WolfCharge(this.gameObject, spriteRenderer, anim, player);
         }
     }
 }

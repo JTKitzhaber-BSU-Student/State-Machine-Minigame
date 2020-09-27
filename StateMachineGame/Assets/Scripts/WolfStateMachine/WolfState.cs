@@ -22,6 +22,7 @@ public class WolfState
     protected SpriteRenderer spriteRenderer;
     protected Transform player; // To store the transform of the player. This will let the guard know where the player is, so it can face the player and know whether it should be shooting or chasing (depending on the distance).
     protected WolfState nextState; // This is NOT the enum above, it's the state that gets to run after the one currently running (so if IDLE was then going to PATROL, nextState would be PATROL).
+    protected Animator anim;
 
     public Transform target;
     float visDist = 10.0f; // When the player is within a distance of 10 from the NPC, then the NPC should be able to see it...
@@ -30,13 +31,14 @@ public class WolfState
     public GameObject[] tags;
 
     // Constructor for State
-    public WolfState(GameObject _npc, SpriteRenderer _spriteRenderer, Transform _player)
+    public WolfState(GameObject _npc, SpriteRenderer _spriteRenderer, Animator _anim, Transform _player)
     {
         npc = _npc;
         spriteRenderer = _spriteRenderer;
         stage = EVENT.ENTER;
         player = _player;
         tags = GameObject.FindGameObjectsWithTag("Checkpoint");
+        anim = _anim;
     }
 
     // Phases as you go through the state.
@@ -108,8 +110,8 @@ public class WolfState
 // Constructor for Idle state.
 public class WolfIdle : WolfState
 {
-    public WolfIdle(GameObject _npc, SpriteRenderer _spriteRenderer, Transform _player)
-                : base(_npc, _spriteRenderer, _player)
+    public WolfIdle(GameObject _npc, SpriteRenderer _spriteRenderer, Animator _anim, Transform _player)
+                : base(_npc, _spriteRenderer, _anim, _player)
     {
         name = WOLFSTATE.IDLE; // Set name of current state.
     }
@@ -127,13 +129,13 @@ public class WolfIdle : WolfState
 
         if (PlayerIsClose())
         {
-            nextState = new WolfPursue(npc, spriteRenderer, player);
+            nextState = new WolfPursue(npc, spriteRenderer, anim, player);
             stage = EVENT.EXIT; // The next time 'Process' runs, the EXIT stage will run instead, which will then return the nextState.
         }
         // The only place where Update can break out of itself. Set chance of breaking out at 10%.
         else if(Random.Range(0,100) < 10)
         {
-            nextState = new WolfPatrol(npc, spriteRenderer, player);
+            nextState = new WolfPatrol(npc, spriteRenderer, anim, player);
             stage = EVENT.EXIT; // The next time 'Process' runs, the EXIT stage will run instead, which will then return the nextState.
         }
     }
@@ -150,8 +152,8 @@ public class WolfPatrol : WolfState
     Rigidbody2D rb;
     int currentIndex = -1;
     
-    public WolfPatrol(GameObject _npc, SpriteRenderer _spriteRenderer, Transform _player)
-                : base(_npc, _spriteRenderer, _player)
+    public WolfPatrol(GameObject _npc, SpriteRenderer _spriteRenderer, Animator _anim, Transform _player)
+                : base(_npc, _spriteRenderer, _anim, _player)
     {
         name = WOLFSTATE.PATROL; // Set name of current state.
         rb = npc.GetComponent<Rigidbody2D>();
@@ -210,13 +212,13 @@ public class WolfPatrol : WolfState
 
         if (PlayerIsClose())
         {
-            nextState = new WolfPursue(npc, spriteRenderer, player);
+            nextState = new WolfPursue(npc, spriteRenderer, anim, player);
             stage = EVENT.EXIT; // The next time 'Process' runs, the EXIT stage will run instead, which will then return the nextState.
         }
 
         else if (IsPlayerBehind())
         {
-            nextState = new WolfIdle(npc, spriteRenderer, player);
+            nextState = new WolfIdle(npc, spriteRenderer, anim, player);
             stage = EVENT.EXIT; // The next time 'Process' runs, the EXIT stage will run instead, which will then return the nextState.
         }
     }
@@ -232,8 +234,8 @@ public class WolfPursue : WolfState
     float startTime;
     Rigidbody2D rb;
     
-    public WolfPursue(GameObject _npc, SpriteRenderer _spriteRenderer, Transform _player)
-                : base(_npc, _spriteRenderer, _player)
+    public WolfPursue(GameObject _npc, SpriteRenderer _spriteRenderer, Animator _anim, Transform _player)
+                : base(_npc, _spriteRenderer, _anim, _player)
     {
         name = WOLFSTATE.PURSUE; 
         rb = npc.GetComponent<Rigidbody2D>();
@@ -266,12 +268,12 @@ public class WolfPursue : WolfState
         float timeElasped = Time.time - startTime;
         if(timeElasped > 5)
         {
-            nextState = new WolfIdle(npc, spriteRenderer, player);
+            nextState = new WolfIdle(npc, spriteRenderer, anim, player);
             stage = EVENT.EXIT;
         }
         if(!PlayerIsClose())
         {
-            nextState = new WolfIdle(npc, spriteRenderer, player);
+            nextState = new WolfIdle(npc, spriteRenderer, anim, player);
             stage = EVENT.EXIT; 
         }
     }
@@ -289,8 +291,8 @@ public class WolfAttack : WolfState
     float startTime;
     Rigidbody2D rb;
     
-    public WolfAttack(GameObject _npc, SpriteRenderer _spriteRenderer, Transform _player)
-                : base(_npc, _spriteRenderer, _player)
+    public WolfAttack(GameObject _npc, SpriteRenderer _spriteRenderer, Animator _anim, Transform _player)
+                : base(_npc, _spriteRenderer, _anim, _player)
     {
         name = WOLFSTATE.ATTACK; 
         rb = npc.GetComponent<Rigidbody2D>();
@@ -311,13 +313,13 @@ public class WolfAttack : WolfState
 
         // if (PlayerIsClose())
         // {
-        //     nextState = new WolfPursue(npc, spriteRenderer, player);
+        //     nextState = new WolfPursue(npc, spriteRenderer, anim, player);
         //     stage = EVENT.EXIT; // The next time 'Process' runs, the EXIT stage will run instead, which will then return the nextState.
         // }
         // // The only place where Update can break out of itself. Set chance of breaking out at 10%.
         // else if(Random.Range(0,100) < 10)
         // {
-        //     nextState = new WolfPatrol(npc, spriteRenderer, player);
+        //     nextState = new WolfPatrol(npc, spriteRenderer, anim, player);
         //     stage = EVENT.EXIT; // The next time 'Process' runs, the EXIT stage will run instead, which will then return the nextState.
         // }
         // // Direction
@@ -333,12 +335,12 @@ public class WolfAttack : WolfState
         // float timeElasped = Time.time - startTime;
         // if(timeElasped > 5)
         // {
-        //     nextState = new WolfIdle(npc, spriteRenderer, player);
+        //     nextState = new WolfIdle(npc, spriteRenderer, anim, player);
         //     stage = EVENT.EXIT;
         // }
         // if(!PlayerIsClose())
         // {
-        //     nextState = new WolfIdle(npc, spriteRenderer, player);
+        //     nextState = new WolfIdle(npc, spriteRenderer, anim, player);
         //     stage = EVENT.EXIT; 
         // }
     }
@@ -354,11 +356,12 @@ public class WolfCharge : WolfState
     float startTime;
     Rigidbody2D rb;
     
-    public WolfCharge(GameObject _npc, SpriteRenderer _spriteRenderer, Transform _player)
-                : base(_npc, _spriteRenderer, _player)
+    public WolfCharge(GameObject _npc, SpriteRenderer _spriteRenderer, Animator _anim, Transform _player)
+                : base(_npc, _spriteRenderer, _anim, _player)
     {
         name = WOLFSTATE.CHARGE; 
         rb = npc.GetComponent<Rigidbody2D>();
+        anim.SetTrigger("SpinTrigger");
     }
 
     public override void Enter()
