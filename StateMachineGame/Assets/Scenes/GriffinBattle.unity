@@ -482,7 +482,7 @@ MonoBehaviour:
   health: 20
   currentState: 0
   nextState: 0
-  viewDistance: 3
+  viewDistance: 10
   attackDistance: 1
   playerDist: 0
   radius: 1
