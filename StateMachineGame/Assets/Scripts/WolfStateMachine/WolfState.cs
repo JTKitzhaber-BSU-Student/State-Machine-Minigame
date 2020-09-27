@@ -25,6 +25,7 @@ public class WolfState
     protected Animator anim;
 
     public Transform target;
+    public float lastCharge;
     float visDist = 10.0f; // When the player is within a distance of 10 from the NPC, then the NPC should be able to see it...
     float visAngle = 30.0f; // ...if the player is within 30 degrees of the line of sight.
     float shootDist = 7.0f; // When the player is within a distance of 7 from the NPC, then the NPC can go into an ATTACK state.
@@ -39,6 +40,7 @@ public class WolfState
         player = _player;
         tags = GameObject.FindGameObjectsWithTag("Checkpoint");
         anim = _anim;
+        lastCharge = Time.time;
     }
 
     // Phases as you go through the state.
@@ -110,32 +112,43 @@ public class WolfState
 // Constructor for Idle state.
 public class WolfIdle : WolfState
 {
+    Rigidbody2D rb;
     public WolfIdle(GameObject _npc, SpriteRenderer _spriteRenderer, Animator _anim, Transform _player)
                 : base(_npc, _spriteRenderer, _anim, _player)
     {
         name = WOLFSTATE.IDLE; // Set name of current state.
+        spriteRenderer.color = new Color(1,.55f,1);
+        rb = npc.GetComponent<Rigidbody2D>();
+        rb.velocity = Vector2.zero;
+
     }
 
     public override void Enter()
     {
         spriteRenderer.color = new Color(1,.55f,1);
+        rb.velocity = Vector2.zero;
         base.Enter(); // Sets stage to UPDATE.
     }
     public override void Update()
     {
-        if(Random.Range(0,100) < 2){
-            spriteRenderer.color = new Color(Random.Range(0F,1F), Random.Range(0, 1F), Random.Range(0, 1F));
-        }
+        // if(Random.Range(0,100) < 2){
+        //     spriteRenderer.color = new Color(Random.Range(0F,1F), Random.Range(0, 1F), Random.Range(0, 1F));
+        // }
 
-        if (PlayerIsClose())
+        // if (PlayerIsClose())
+        // {
+        //     nextState = new WolfPursue(npc, spriteRenderer, anim, player);
+        //     stage = EVENT.EXIT; // The next time 'Process' runs, the EXIT stage will run instead, which will then return the nextState.
+        // }
+        // // The only place where Update can break out of itself. Set chance of breaking out at 10%.
+        // else if(Random.Range(0,100) < 10)
+        // {
+        //     nextState = new WolfPatrol(npc, spriteRenderer, anim, player);
+        //     stage = EVENT.EXIT; // The next time 'Process' runs, the EXIT stage will run instead, which will then return the nextState.
+        // }
+        if(Random.Range(0,100) < 5)
         {
             nextState = new WolfPursue(npc, spriteRenderer, anim, player);
-            stage = EVENT.EXIT; // The next time 'Process' runs, the EXIT stage will run instead, which will then return the nextState.
-        }
-        // The only place where Update can break out of itself. Set chance of breaking out at 10%.
-        else if(Random.Range(0,100) < 10)
-        {
-            nextState = new WolfPatrol(npc, spriteRenderer, anim, player);
             stage = EVENT.EXIT; // The next time 'Process' runs, the EXIT stage will run instead, which will then return the nextState.
         }
     }
@@ -239,10 +252,12 @@ public class WolfPursue : WolfState
     {
         name = WOLFSTATE.PURSUE; 
         rb = npc.GetComponent<Rigidbody2D>();
+        rb.velocity = Vector2.zero;
     }
 
     public override void Enter()
     {
+        anim.SetTrigger("IdleTrigger");
         startTime = Time.time;
         spriteRenderer.color = new Color(.25f,.75f,1);
         base.Enter();
@@ -264,18 +279,17 @@ public class WolfPursue : WolfState
         float curTime = Time.time;
         float step = 2 * Time.deltaTime;
         npc.transform.position = Vector3.MoveTowards(npc.transform.position, player.position, step);
-
-        float timeElasped = Time.time - startTime;
-        if(timeElasped > 5)
+        if(Time.time > lastCharge + 5)
         {
-            nextState = new WolfIdle(npc, spriteRenderer, anim, player);
-            stage = EVENT.EXIT;
-        }
-        if(!PlayerIsClose())
-        {
-            nextState = new WolfIdle(npc, spriteRenderer, anim, player);
+            nextState = new WolfCharge(npc, spriteRenderer, anim, player);
             stage = EVENT.EXIT; 
         }
+
+        // if(!PlayerIsClose())
+        // {
+        //     nextState = new WolfIdle(npc, spriteRenderer, anim, player);
+        //     stage = EVENT.EXIT; 
+        // }
     }
 
     
@@ -296,19 +310,39 @@ public class WolfAttack : WolfState
     {
         name = WOLFSTATE.ATTACK; 
         rb = npc.GetComponent<Rigidbody2D>();
+        rb.velocity = Vector2.zero;
+        spriteRenderer.color = new Color(.55f,.33f,.82f);
     }
 
     public override void Enter()
     {
+        rb.velocity = Vector2.zero;
+        anim.ResetTrigger("PrepTrigger");
+        anim.SetTrigger("AttackTrigger");
         startTime = Time.time;
-        spriteRenderer.color = new Color(.55f,.33f,.82f);
+        
         base.Enter();
     }
 
     public override void Update()
     {
         if(Random.Range(0,100) < 2){
-            spriteRenderer.color = new Color(Random.Range(0F,1F), Random.Range(0, 1F), Random.Range(0, 1F));
+            spriteRenderer.color = new Color(255, 0, 0);
+        }
+
+        Vector3 direction = player.position - npc.transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        rb.rotation = angle - 90;
+
+        // Position
+        float curTime = Time.time;
+        float step = 1.25f * Time.deltaTime;
+        npc.transform.position = Vector3.MoveTowards(npc.transform.position, player.position, step);
+
+        if(Time.time > startTime + 0.5f)
+        {
+            nextState = new WolfPursue(npc, spriteRenderer, anim, player);
+            stage = EVENT.EXIT; 
         }
 
         // if (PlayerIsClose())
@@ -347,6 +381,7 @@ public class WolfAttack : WolfState
 
     public override void Exit()
     {
+        anim.ResetTrigger("AttackTrigger");
         base.Exit();
     }
 }
@@ -361,6 +396,7 @@ public class WolfCharge : WolfState
     {
         name = WOLFSTATE.CHARGE; 
         rb = npc.GetComponent<Rigidbody2D>();
+        anim.ResetTrigger("IdleTrigger");
         anim.SetTrigger("SpinTrigger");
     }
 
@@ -370,7 +406,7 @@ public class WolfCharge : WolfState
         spriteRenderer.color = new Color(.55f,.33f,.82f);
         base.Enter();
         float angle = Mathf.Atan2(player.position.y - npc.transform.position.y, player.position.x - npc.transform.position.x);
-        npc.GetComponent<Rigidbody2D>().AddForce(new Vector2 (Mathf.Cos(angle) * 1000f, Mathf.Sin(angle) * 1000f));
+        npc.GetComponent<Rigidbody2D>().AddForce(new Vector2 (Mathf.Cos(-angle) * 1000f, Mathf.Sin(-angle) * 1000f));
     }
 
     public override void Update()
@@ -383,12 +419,21 @@ public class WolfCharge : WolfState
         angle = angle - 90;
         npc.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         //npc.transform.rotation = Quaternion.LookRotation(npc.GetComponent<Rigidbody2D>().velocity);
+
+        if(Time.time > startTime + 5f)
+        {
+            nextState = new WolfPursue(npc, spriteRenderer, anim, player);
+            stage = EVENT.EXIT; 
+        }
         
 
     }
 
     public override void Exit()
     {
+        rb.velocity = Vector2.zero;
+        lastCharge = Time.time;
+        anim.ResetTrigger("SpinTrigger");
         base.Exit();
     }
 }
