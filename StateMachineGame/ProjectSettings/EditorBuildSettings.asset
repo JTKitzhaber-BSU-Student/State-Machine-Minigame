@@ -8,4 +8,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/WolfBattle.unity
+    guid: fad5965d44f33fc45ab38229f674c9ca
+  - enabled: 1
+    path: Assets/Scenes/HydraBattle.unity
+    guid: bf6f5efdcd4d9bf44b834a6597a6fb42
+  - enabled: 1
+    path: Assets/Scenes/GriffinBattle.unity
+    guid: 5a783cfdd16e2254898e2ef4f60d5a80
   m_configObjects: {}
