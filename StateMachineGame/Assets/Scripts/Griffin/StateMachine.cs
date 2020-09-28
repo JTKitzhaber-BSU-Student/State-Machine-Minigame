@@ -173,10 +173,11 @@ public class StateMachine : MonoBehaviour
         Debug.Log("Following player");
       //  Debug.Log(enemyPos.position);
     }
-
-    public void DamageEnemy()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("You hurt me you meanie");
+        Debug.Log("hit");
+        GameObject.Find("Main Camera").GetComponent<HealthTest>().TakeDamage(5);
+
     }
 }
 
