@@ -25,6 +25,14 @@ public class Hydra : MonoBehaviour
         currentState = currentState.Process();
     }
 
+    void OnTriggerEnter2D(Collider2D collide)
+    {
+        if (collide.gameObject.tag == "Bullet")
+        {
+            Camera.main.GetComponent<HealthTest>().TakeDamage(5);
+        }
+    }
+
     public void SpawnShot(float angle)
     {
         GameObject shot = Instantiate(hydraProjectile, transform.position, transform.rotation);
