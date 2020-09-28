@@ -103,7 +103,7 @@ public class HydraRangedAttack : HydraState
         stateName = HYDRA_STATE.RANGE_ATTACK;
     }
 
-    public float projectileCount = 5f;
+    public float projectileCount = 7f;
     public float multiShotAngle = 12.0f; // degrees
 
     public override void Enter()
