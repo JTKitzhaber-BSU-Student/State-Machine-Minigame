@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\WolfStateMachine\Wolf.cs" />
      <Compile Include="Assets\Scripts\Health.cs" />
      <Compile Include="Assets\Scripts\HydraStateMachine\HydraState.cs" />
+     <Compile Include="Assets\MenuManager.cs" />
      <Compile Include="Assets\Scripts\AnimationTest.cs" />
      <Compile Include="Assets\Scripts\WolfStateMachine\WolfState.cs" />
      <Compile Include="Assets\Scripts\HydraStateMachine\Hydra.cs" />
