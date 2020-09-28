@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Health : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Health : MonoBehaviour
     public GameObject[] hearts;
     public bool canTakeDamge;
     SpriteRenderer spriteRenderer;
+
 
     void Start(){
         canTakeDamge = true;
@@ -27,6 +29,11 @@ public class Health : MonoBehaviour
             {
                 hearts[i].SetActive(false);
             }
+        }
+
+        if(numOfHearts <= 0)
+        {
+            SceneManager.LoadScene("DeathScene");
         }
     }
 

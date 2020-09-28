@@ -11,6 +11,7 @@ public class Griffin : MonoBehaviour
     public Sprite grifAttack;
     public Sprite grifIdle;
     public GameObject griffin;
+    private Rigidbody2D rb;
     public float viewDist = 3f;
     public float attackDist = 1f;
  
@@ -23,6 +24,7 @@ public class Griffin : MonoBehaviour
     void Start()
     {
         anim = this.GetComponent<Animator>();
+        rb = this.GetComponent<Rigidbody2D>();
        // grifIdle = new GriffinIdle(this.gameObject, anim, player);
      //   currentState = GriffinState.GRIFFIN_STATE.IDLE;
 
@@ -31,6 +33,10 @@ public class Griffin : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Vector3 direction = player.position - this.transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        rb.rotation = angle - 90;
+
        // currentState = currentState.Process();
         float playerDist = Vector2.Distance(player.position, this.transform.position);
         if(playerDist <= viewDist)

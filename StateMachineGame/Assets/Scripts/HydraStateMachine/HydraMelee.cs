@@ -14,11 +14,12 @@ public class HydraMelee : MonoBehaviour
     {
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
             //Call Player Damage function
+            collision.gameObject.GetComponent<Health>().TakeDamage();
         }
     }
 

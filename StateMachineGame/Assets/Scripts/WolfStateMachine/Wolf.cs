@@ -45,7 +45,7 @@ public class Wolf : MonoBehaviour
     }
 
     void OnTriggerStay2D(Collider2D coll){
-        if(currentState.name == WolfState.WOLFSTATE.ATTACK && coll.gameObject.tag != "Bullet"){
+        if((currentState.name == WolfState.WOLFSTATE.ATTACK || currentState.name == WolfState.WOLFSTATE.CHARGE) && coll.gameObject.tag != "Bullet" && coll.gameObject.tag == "Player"){
             // currentState = new WolfCharge(this.gameObject, spriteRenderer, anim, player);
             // Debug.Log("player should take damage");
             coll.gameObject.GetComponent<Health>().TakeDamage();

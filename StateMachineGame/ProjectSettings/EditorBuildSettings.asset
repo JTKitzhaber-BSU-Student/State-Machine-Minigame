@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 809f38e1eea361d44b383b9046a9216d
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
@@ -17,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GriffinBattle.unity
     guid: 5a783cfdd16e2254898e2ef4f60d5a80
+  - enabled: 1
+    path: Assets/Scenes/DeathScene.unity
+    guid: 141606f6ac6a8cc4382b6b0a1dacd5f4
+  - enabled: 1
+    path: Assets/Scenes/WinScene.unity
+    guid: 72584c6b8cc35ed41bec9da232bb762a
   m_configObjects: {}

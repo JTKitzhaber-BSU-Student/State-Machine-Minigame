@@ -21,6 +21,7 @@ public class StateMachine : MonoBehaviour
     public Sprite attackGrif;
     public Sprite wingGrif;
     public SpriteRenderer spriteRend;
+    private Rigidbody2D rb;
     
     //TESTING CODE
     //public Color attackCol = Color.red;
@@ -65,10 +66,16 @@ public class StateMachine : MonoBehaviour
 
         enemyPos = enemy.transform;
 
+        rb = GetComponent<Rigidbody2D>();
+
     }
 
     public void Update()
     {
+        Vector3 direction = player.transform.position - this.transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        rb.rotation = angle + 90;
+
         playerDist = Vector2.Distance(enemyPos.position, playerPos.position);
         //CHECK ENEMY AI FORUM BY Eiznek
         if (currentState != nextState && (isStateFinished || interruptState))

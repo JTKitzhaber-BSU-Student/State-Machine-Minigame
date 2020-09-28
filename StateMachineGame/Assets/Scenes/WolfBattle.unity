@@ -378,7 +378,7 @@ SpriteRenderer:
   m_Size: {x: 4.1, y: 3.95}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &177469332
@@ -838,7 +838,7 @@ SpriteRenderer:
   m_Size: {x: 4.1, y: 3.95}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &448396599
@@ -1093,6 +1093,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba291bda8e55c9468162e8db6e75e5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentScene: 0
   maxHealth: 100
   currentHealth: 0
   healthBar: {fileID: 1520639291}
@@ -1171,7 +1172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MainCamera: {fileID: 519420031}
-  adjustX: -1
+  adjustX: 0
   adjustY: 0
 --- !u!114 &525822664
 MonoBehaviour:
@@ -1204,6 +1205,10 @@ PrefabInstance:
       propertyPath: camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 7495986714175658240, guid: 4c5562f22fe2a9f40ac105fa304dc1b8, type: 3}
+      propertyPath: particle
+      value: 
+      objectReference: {fileID: 3347298028601986451, guid: 095e1824a055fef42ad3c4388905b5da, type: 3}
     - target: {fileID: 7495986714175658242, guid: 4c5562f22fe2a9f40ac105fa304dc1b8, type: 3}
       propertyPath: m_Name
       value: NewPlayer
@@ -1389,7 +1394,7 @@ SpriteRenderer:
   m_Size: {x: 4.1, y: 3.95}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &921034170
@@ -1505,7 +1510,7 @@ SpriteRenderer:
   m_Size: {x: 4.1, y: 3.95}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1253139833
@@ -2015,7 +2020,7 @@ SpriteRenderer:
   m_Size: {x: 4.1, y: 3.95}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &2087145027

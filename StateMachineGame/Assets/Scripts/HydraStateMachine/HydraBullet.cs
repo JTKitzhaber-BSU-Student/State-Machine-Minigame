@@ -21,7 +21,7 @@ public class HydraBullet : MonoBehaviour
         {
             killBullet();
 
-            //Call Player Damage function
+            collision.gameObject.GetComponent<Health>().TakeDamage();
         }
     }
 

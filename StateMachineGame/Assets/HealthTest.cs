@@ -2,9 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class HealthTest : MonoBehaviour
 {
+    public enum SCENE
+    {
+        WOLF, HYDRA, GRIFFIN
+    };
+
+    public SCENE currentScene;
     public int maxHealth = 100;
     public int currentHealth;
 
@@ -22,6 +29,11 @@ public class HealthTest : MonoBehaviour
         {
             TakeDamage(20);
         }
+        if(currentHealth <= 0)
+        {
+            LoadTheNextScene();
+        }
+
     }
 
     public void TakeDamage(int damage)
@@ -29,5 +41,20 @@ public class HealthTest : MonoBehaviour
         currentHealth -= damage;
 
         healthBar.SetHealth(currentHealth);
+    }
+
+    private void LoadTheNextScene(){
+        if (currentScene == SCENE.WOLF)
+        {
+            SceneManager.LoadScene("GriffinBattle");
+        }
+        else if (currentScene == SCENE.GRIFFIN)
+        {
+            SceneManager.LoadScene("HydraBattle");
+        }
+        else if (currentScene == SCENE.HYDRA)
+        {
+            SceneManager.LoadScene("WinScene");
+        }
     }
 }
