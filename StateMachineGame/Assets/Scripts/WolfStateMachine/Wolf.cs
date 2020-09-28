@@ -47,7 +47,8 @@ public class Wolf : MonoBehaviour
     void OnTriggerStay2D(Collider2D coll){
         if(currentState.name == WolfState.WOLFSTATE.ATTACK && coll.gameObject.tag != "Bullet"){
             // currentState = new WolfCharge(this.gameObject, spriteRenderer, anim, player);
-            Debug.Log("player should take damage");
+            // Debug.Log("player should take damage");
+            coll.gameObject.GetComponent<Health>().TakeDamage();
         }
        
     }
@@ -56,7 +57,7 @@ public class Wolf : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         onAttack = false;
-        Debug.Log("Should persue or soemthing");
+        // Debug.Log("Should persue or soemthing");
         // WolfState.stage = WolfState.EVENT.EXIT; 
         currentState = new WolfAttack(this.gameObject, spriteRenderer, anim, player);
     }
