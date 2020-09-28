@@ -52,11 +52,21 @@ public class Griffin : MonoBehaviour
         anim.ResetTrigger("GriffinIdleAnim");
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerStay2D(Collider2D coll){
+        if(coll.gameObject.tag == "Player"){
+            // currentState = new WolfCharge(this.gameObject, spriteRenderer, anim, player);
+            // Debug.Log("player should take damage");
+            coll.gameObject.GetComponent<Health>().TakeDamage();
+        }
+       
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(gameObject.tag == "Player")
+        if(collision.gameObject.tag == "Player")
         {
             Debug.Log("player hit");
+            collision.gameObject.GetComponent<Health>().TakeDamage();
         }
 
         if(collision.transform.tag == "Enemy")

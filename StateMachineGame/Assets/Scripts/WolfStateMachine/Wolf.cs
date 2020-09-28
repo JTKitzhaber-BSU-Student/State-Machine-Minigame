@@ -30,11 +30,14 @@ public class Wolf : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D coll){
-        if(currentState.name == WolfState.WOLFSTATE.PURSUE && coll.gameObject.tag != "Bullet" && onAttack == false){
+        if(currentState.name == WolfState.WOLFSTATE.PURSUE && coll.gameObject.tag != "Bullet"){
             // currentState = new WolfCharge(this.gameObject, spriteRenderer, anim, player);
             anim.SetTrigger("PrepTrigger");
-            onAttack = true;
-            StartCoroutine(Attack());
+            // onAttack = true;
+            // StartCoroutine(Attack());
+
+
+            currentState = new WolfPrep(this.gameObject, spriteRenderer, anim, player);
         }
         if(coll.gameObject.tag == "Bullet")
         {

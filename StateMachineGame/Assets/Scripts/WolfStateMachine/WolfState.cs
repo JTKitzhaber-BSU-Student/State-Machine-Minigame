@@ -7,7 +7,7 @@ public class WolfState
     // 'States' that the NPC could be in.
     public enum WOLFSTATE
     {
-        IDLE, PATROL, PURSUE, ATTACK, SLEEP, RUNAWAY, CHARGE
+        IDLE, PATROL, PURSUE, PREP, ATTACK, SLEEP, RUNAWAY, CHARGE
     };
 
     // 'Events' - where we are in the running of a STATE.
@@ -117,7 +117,7 @@ public class WolfIdle : WolfState
                 : base(_npc, _spriteRenderer, _anim, _player)
     {
         name = WOLFSTATE.IDLE; // Set name of current state.
-        spriteRenderer.color = new Color(1,.55f,1);
+        spriteRenderer.color = new Color(1,1,1);
         rb = npc.GetComponent<Rigidbody2D>();
         rb.velocity = Vector2.zero;
 
@@ -125,7 +125,7 @@ public class WolfIdle : WolfState
 
     public override void Enter()
     {
-        spriteRenderer.color = new Color(1,.55f,1);
+        spriteRenderer.color = new Color(1,1,1);
         rb.velocity = Vector2.zero;
         base.Enter(); // Sets stage to UPDATE.
     }
@@ -259,7 +259,8 @@ public class WolfPursue : WolfState
     {
         anim.SetTrigger("IdleTrigger");
         startTime = Time.time;
-        spriteRenderer.color = new Color(.25f,.75f,1);
+
+        spriteRenderer.color = new Color(1,1,1);
         base.Enter();
     }
 
@@ -300,6 +301,58 @@ public class WolfPursue : WolfState
     }
 }
 
+public class WolfPrep : WolfState
+{
+    float startTime;
+    Rigidbody2D rb;
+    
+    public WolfPrep(GameObject _npc, SpriteRenderer _spriteRenderer, Animator _anim, Transform _player)
+                : base(_npc, _spriteRenderer, _anim, _player)
+    {
+        name = WOLFSTATE.PREP; 
+        rb = npc.GetComponent<Rigidbody2D>();
+        rb.velocity = Vector2.zero;
+        spriteRenderer.color = new Color(.55f,.33f,.82f);
+    }
+
+    public override void Enter()
+    {
+        rb.velocity = Vector2.zero;
+        anim.ResetTrigger("IdleTrigger");
+        anim.SetTrigger("PrepTrigger");
+    
+        startTime = Time.time;
+        
+        base.Enter();
+    }
+
+    public override void Update()
+    {
+
+        Vector3 direction = player.position - npc.transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        rb.rotation = angle - 90;
+
+        // Position
+        float curTime = Time.time;
+        float step = 1.25f * Time.deltaTime;
+        npc.transform.position = Vector3.MoveTowards(npc.transform.position, player.position, step);
+
+        if(Time.time > startTime + 1f)
+        {
+            Debug.Log("Entered Attack");
+            nextState = new WolfAttack(npc, spriteRenderer, anim, player);
+            stage = EVENT.EXIT; 
+        }
+
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+    }
+}
+
 public class WolfAttack : WolfState
 {
     float startTime;
@@ -311,7 +364,6 @@ public class WolfAttack : WolfState
         name = WOLFSTATE.ATTACK; 
         rb = npc.GetComponent<Rigidbody2D>();
         rb.velocity = Vector2.zero;
-        spriteRenderer.color = new Color(.55f,.33f,.82f);
     }
 
     public override void Enter()
@@ -345,38 +397,6 @@ public class WolfAttack : WolfState
             stage = EVENT.EXIT; 
         }
 
-        // if (PlayerIsClose())
-        // {
-        //     nextState = new WolfPursue(npc, spriteRenderer, anim, player);
-        //     stage = EVENT.EXIT; // The next time 'Process' runs, the EXIT stage will run instead, which will then return the nextState.
-        // }
-        // // The only place where Update can break out of itself. Set chance of breaking out at 10%.
-        // else if(Random.Range(0,100) < 10)
-        // {
-        //     nextState = new WolfPatrol(npc, spriteRenderer, anim, player);
-        //     stage = EVENT.EXIT; // The next time 'Process' runs, the EXIT stage will run instead, which will then return the nextState.
-        // }
-        // // Direction
-        // Vector3 direction = player.position - npc.transform.position;
-        // float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        // rb.rotation = angle - 90;
-
-        // // Position
-        // float curTime = Time.time;
-        // float step = 2 * Time.deltaTime;
-        // npc.transform.position = Vector3.MoveTowards(npc.transform.position, player.position, step);
-
-        // float timeElasped = Time.time - startTime;
-        // if(timeElasped > 5)
-        // {
-        //     nextState = new WolfIdle(npc, spriteRenderer, anim, player);
-        //     stage = EVENT.EXIT;
-        // }
-        // if(!PlayerIsClose())
-        // {
-        //     nextState = new WolfIdle(npc, spriteRenderer, anim, player);
-        //     stage = EVENT.EXIT; 
-        // }
     }
 
     public override void Exit()
